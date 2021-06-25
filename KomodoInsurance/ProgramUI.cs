@@ -155,8 +155,8 @@ namespace KomodoInsurance
                 {
                     int count = _devRepo.GetDevelopers().Count;
                     List<Developer> devs = _devRepo.GetDevelopers();
-                    devs.OrderBy(x => x.UserId);
-                    Developer lastDev = _devRepo.GetDevelopers()[count - 1]; //Gets the last developer in the list
+                    List<Developer> orderedList = devs.OrderBy(x => x.UserId).ToList();
+                    Developer lastDev = orderedList[count - 1]; //Gets the last developer in the list
                     id = lastDev.UserId + 1; //Increase the new developers id to one higher than last developer in the list
                     Console.WriteLine("ID Already in Use; ID auto assigned");
                     ToContinue();
@@ -192,10 +192,10 @@ namespace KomodoInsurance
             Console.WriteLine("Select team by their team id");
             int teamid = int.Parse(Console.ReadLine());
             
-            while (keepAdding)
+            while (keepAdding) //Allows the user to add multiple devs to a team at once
             {
                 Console.Clear();
-                foreach (Developer dev in devs)
+                foreach (Developer dev in devs) //Find every dev that doesn't have a team and prints them to the UI
                 {
                     if (!dev.HasTeam) { PrintDeveloper(dev); }
                 }
@@ -209,7 +209,7 @@ namespace KomodoInsurance
             }
 
             Console.Clear();
-            PrintTeam(_teamRepo.GetTeamById(teamid));
+            PrintTeam(_teamRepo.GetTeamById(teamid)); // Prints the newly updated team
 
             Console.WriteLine("\nUpdated Team");
             ToContinue();
@@ -223,7 +223,7 @@ namespace KomodoInsurance
             int teamid = int.Parse(Console.ReadLine());
             DeveloperTeam team = _teamRepo.GetTeamById(teamid);
             Console.Clear();
-            foreach (Developer dev in team.TeamMembers)
+            foreach (Developer dev in team.TeamMembers) //Gets each dev in the team and prints them out
             {
                 PrintDeveloper(dev);
             }
@@ -258,8 +258,8 @@ namespace KomodoInsurance
         public void MonthlyReport()
         {
             Console.Clear();
-            List<Developer> devReport = _devRepo.GetMonthlyReport();
-            foreach(Developer dev in devReport)
+            List<Developer> devReport = _devRepo.GetMonthlyReport(); //Finds all Dev's without software access
+            foreach(Developer dev in devReport) //Loops through all devs without access and prints them
             {
                 Console.WriteLine(dev.Name + " does not have software access");
             }

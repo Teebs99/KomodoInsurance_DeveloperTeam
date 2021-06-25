@@ -124,7 +124,7 @@ namespace KomodoInsurance
             }
             Console.WriteLine("\n--------------------------------------------");
         }
-        public void ShowDevelopers()
+        public void ShowDevelopers()//Loops through the list of developers and prints them
         {
             Console.Clear();
             List<Developer> devs = _devRepo.GetDevelopers();
@@ -132,7 +132,6 @@ namespace KomodoInsurance
             {
                 PrintDeveloper(dev);
             }
-            
         }
         public void ShowTeams()
         {
@@ -155,7 +154,7 @@ namespace KomodoInsurance
                 {
                     int count = _devRepo.GetDevelopers().Count;
                     List<Developer> devs = _devRepo.GetDevelopers();
-                    List<Developer> orderedList = devs.OrderBy(x => x.UserId).ToList();
+                    List<Developer> orderedList = devs.OrderBy(x => x.UserId).ToList();//Orders the List by the User ID
                     Developer lastDev = orderedList[count - 1]; //Gets the last developer in the list
                     id = lastDev.UserId + 1; //Increase the new developers id to one higher than last developer in the list
                     Console.WriteLine("ID Already in Use; ID auto assigned");
